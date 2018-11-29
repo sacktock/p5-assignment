@@ -20,8 +20,6 @@ function draw() {
     // Set the vertex
     curveVertex(x, y); 
     xoff += 0.05;
-		
-		
   }
     
   //Speed of moving waves
@@ -34,8 +32,4 @@ function draw() {
 
 function mousePressed() {
   setup();
-}
-
-function keyReleased() {
-  if (key=="s" || key=="S")save("svimg" + day() + "_" + month() + "_" + hour() + "_" + minute() + "_" + second() + ".svg");
 }
