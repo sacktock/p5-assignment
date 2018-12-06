@@ -1,13 +1,29 @@
 var yoff = 0.0
+var col = 255
+
+class Wave {
+
+	constructor() {
+
+	}
+	
+}
 
 function setup() {
+	col = generateRandomNumber(0,255);
   createCanvas(1280,720);
   background(0);
 }
 
+function generateRandomNumber(min_value, max_value) {
+	return Math.floor(Math.random() * (max_value-min_value) + min_value);
+}
+
 function draw() {
+	var wave = new Wave();
+		
 	// background(0, 1);
-  stroke(255,20);
+  stroke(66,col,244,20);
   noFill();
 
   beginShape();
