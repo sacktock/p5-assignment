@@ -1,18 +1,29 @@
-var yoff = 0.0
-var col = 255
+
 
 class Wave {
 
-	constructor() {
+	constructor(yoff,xoff) {
+		this.yoff = yoff;
+		this.xoff = xoff;
 
+	}
+	
+	getY() {
+		var y = map(noise(this.xoff, this.yoff), 0, 1, 100, 500);
+		this.xoff += 0.05;
+		return y;
+	}
+	
+	getYoff() {
+		return this.yoff;	
 	}
 	
 }
 
+
 function setup() {
-	col = generateRandomNumber(0,255);
-  createCanvas(1280,720);
-  background(0);
+  	createCanvas(1280,720);
+  	background(0);
 }
 
 function generateRandomNumber(min_value, max_value) {
@@ -20,22 +31,19 @@ function generateRandomNumber(min_value, max_value) {
 }
 
 function draw() {
-	var wave = new Wave();
-		
+	var wave = new Wave(0.0,0);
 	// background(0, 1);
-  stroke(66,col,244,20);
+  stroke(255,125,244,20);
   noFill();
 
   beginShape();
     
-  var xoff= 0;
+  var yoff = wave.getYoff();
     
   for (var x = 0; x <= width; x += 10) {
-  // Map noise value (between 0 and 1) to y-value of canvas
-    var y = map(noise(xoff, yoff), 0, 1, 100, 500);
+  
     // Set the vertex
-    curveVertex(x, y); 
-    xoff += 0.05;
+    curveVertex(x, wave.getY()); 
   }
     
   //Speed of moving waves
