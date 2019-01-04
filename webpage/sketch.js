@@ -1,59 +1,80 @@
 
 
-class Wave {
 
-	constructor(yoff,xoff) {
-		this.yoff = yoff;
-		this.xoff = xoff;
-
-	}
-	
-	getY() {
-		var y = map(noise(this.xoff, this.yoff), 0, 1, 100, 500);
-		this.xoff += 0.05;
-		return y;
-	}
-	
-	getYoff() {
-		return this.yoff;	
-	}
-	
-}
-
+var obj;
 
 function setup() {
-  	createCanvas(1280,720);
-  	background(0);
-}
-
-function generateRandomNumber(min_value, max_value) {
-	return Math.floor(Math.random() * (max_value-min_value) + min_value);
+	createCanvas(1280,720);
+	background(0);
+	obj = new waves();
 }
 
 function draw() {
-	var wave = new Wave(0.0,0);
 	// background(0, 1);
-  stroke(255,125,244,20);
-  noFill();
+	obj.display();
 
-  beginShape();
+}
+
+//wave class
+function waves(){
+	this.yoff = 0.0; //0.0
+	this.xoff = 0; //0
+	this.red = 255; //255
+	this.green = 255; //255
+	this.blue = 255; //255
+	this.alpha = 20; //20
+	this.ySpeed = 0.008; //0.008
+	this.xSpeed = 0.05; //0.05
+	
+	this.display = function(){
+		stroke(this.red,this.green,this.blue,this.alpha);
+		noFill();
+
+		beginShape();
     
-  var yoff = wave.getYoff();
+		this.xoff= 0;
     
-  for (var x = 0; x <= width; x += 10) {
-  
-    // Set the vertex
-    curveVertex(x, wave.getY()); 
-  }
+		for (var x = 0; x <= width; x += 10) {
+		// Map noise value (between 0 and 1) to y-value of canvas
+			var y = map(noise(this.xoff, this.yoff), 0, 1, 100, 500);
+			// Set the vertex
+			curveVertex(x, y); 
+			this.xoff += this.xSpeed;
+		}
     
-  //Speed of moving waves
-  yoff += 0.008;
-  curveVertex(width, height);
-  curveVertex(0, height);
-  endShape(CLOSE);
+		//Speed of moving waves
+		this.yoff += this.ySpeed;
+		curveVertex(width, height);
+		curveVertex(0, height);
+		endShape(CLOSE);
+	}
+	
+	this.setRed = function(red){
+		this.red = red;
+	}
+	
+	this.setGreen = function(green){
+		this.green = green;
+	}
+	
+	this.setBlue = function(blue){
+		this.blue = blue;
+	}
+	
+	this.setAlpha = function(alpha){
+		this.alpha = alpha;
+	}
+	
+	this.setYSpeed = function(ySpeed){
+		this.ySpeed = ySpeed;
+	}
+	
+	this.setXSpeed = function(xSpeed){
+		this.xSpeed = xSpeed;
+	}
 
 }
 
 function mousePressed() {
-  setup();
+	setup();
 }
