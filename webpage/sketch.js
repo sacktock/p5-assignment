@@ -1,91 +1,119 @@
 
 
 
-var obj;
+var waves;
 
 function setup() {
 	createCanvas(1280,720);
 	clearCanvas();
-	obj = new Waves();
+	waves = new Waves();
 	createP('')
-	setupButtons();
+	setupDOM();
 }
 
-function setupButtons() {
+function setupDOM() {
+	colLabel = createDiv("Colour Sliders:");
+	colLabel.position(10,736);
+	
+	otherLabel = createDiv("Other Sliders:");
+	otherLabel.position(384,736);
+	
+	funcLabel = createDiv("Functions:");
+	funcLabel.position(758,736)
+	
 	var clear = createButton("clear");
 	clear.position(1200,680);
 	clear.mousePressed(clearCanvas);
 	
-	var rSlider = createSlider(0,255,255);
-	rSlider.input(function() {
-		obj.setRed(rSlider.value());
+	hueLabel = createDiv("Hue");
+	hueLabel.position(10,768);
+	var hueSlider = createSlider(0,360,0);
+	hueSlider.parent(hueLabel);
+	hueSlider.input(function() {
+		waves.setRGB(hueSlider.value(),map(satSlider.value(),0,100,0,1),map(litSlider.value(),0,100,0,1));
 	});
 	
-	var gSlider = createSlider(0,255,255);
-	gSlider.input(function() {
-		obj.setGreen(gSlider.value());
+	satLabel = createDiv("Saturation");
+	satLabel.position(10,800);
+	var satSlider = createSlider(0,100,0);
+	satSlider.parent(satLabel);
+	satSlider.input(function() {
+		waves.setRGB(hueSlider.value(),map(satSlider.value(),0,100,0,1),map(litSlider.value(),0,100,0,1));
 	});
 	
-	var bSlider = createSlider(0,255,255);
-	bSlider.input(function() {
-		obj.setBlue(bSlider.value());
+	litLabel = createDiv("Lightness");
+	litLabel.position(10,832);
+	var litSlider = createSlider(0,100,100);
+	litSlider.parent(litLabel);
+	litSlider.input(function() {
+		waves.setRGB(hueSlider.value(),map(satSlider.value(),0,100,0,1),map(litSlider.value(),0,100,0,1));
 	});
 	
+	aLabel = createDiv("Opactity");
+	aLabel.position(10,864);
 	var aSlider = createSlider(0,100,20);
+	aSlider.parent(aLabel);
 	aSlider.input(function() {
-		obj.setAlpha(aSlider.value());
+		waves.setAlpha(aSlider.value());
 	});
 	
+	ySLabel = createDiv("Wave Speed");
+	ySLabel.position(384,768);
 	var ySpeedSlider = createSlider(0,100,50);
+	ySpeedSlider.parent(ySLabel);
 	ySpeedSlider.input(function() {
-		obj.setYSpeed(map(ySpeedSlider.value(),0,100,0.0,0.016));
+		waves.setYSpeed(map(ySpeedSlider.value(),0,100,0.0,0.016));
 	});
 	
+	xSLabel = createDiv("Waviness");
+	xSLabel.position(384,800);
 	var xSpeedSlider = createSlider(0,100,50);
+	xSpeedSlider.parent(xSLabel);
 	xSpeedSlider.input(function() {
-		obj.setXSpeed(map(xSpeedSlider.value(),0,100,0.0,0.1));
+		waves.setXSpeed(map(xSpeedSlider.value(),0,100,0.0,0.1));
 	});
 	
+	sRLabel = createDiv("Waviness 2");
+	sRLabel.position(384,832);
 	var sampleRateSlider = createSlider(1,100,10);
+	sampleRateSlider.parent(sRLabel);
 	sampleRateSlider.input(function() {
-		obj.setSampleRate(sampleRateSlider.value());
+		waves.setSampleRate(sampleRateSlider.value());
 	});
 }
 
 function draw() {
 	// background(0, 1);
-	obj.display();
-
+	waves.draw();
 }
 
-//wave class
-function Waves(){
-	//default values
-	this.yoff = 0.0; //0.0
-	this.xoff = 0; //0
-	this.red = 255; //255
-	this.green = 255; //255
-	this.blue = 255; //255
-	this.alpha = 20; //20
-	this.ySpeed = 0.008; //0.008
-	this.xSpeed = 0.05; //0.05
-	this.sampleRate = 10; //10
+class Waves {
+	constructor() {
+		//default values
+		this.yoff = 0.0; //0.0
+		this.red = 255; //255
+		this.green = 255; //255
+		this.blue = 255; //255
+		this.alpha = 20; //20
+		this.ySpeed = 0.008; //0.008
+		this.xSpeed = 0.05; //0.05
+		this.sampleRate = 10; //10
+	}
 	
-	//display the next wave
-	this.display = function(){
+	draw() {
 		stroke(this.red,this.green,this.blue,this.alpha);
 		noFill();
 
 		beginShape();
     
-		this.xoff= 0;
+		var xoff = 0;
     
 		for (var x = 0; x <= width; x += this.sampleRate) {
 		// Map noise value (between 0 and 1) to y-value of canvas
-			var y = map(noise(this.xoff, this.yoff), 0, 1, 100, 500);
+			var y = map(noise(xoff, this.yoff), 0, 1, 100, 500);
 			// Set the vertex
 			curveVertex(x, y); 
-			this.xoff += this.xSpeed;
+			xoff += this.xSpeed;
 		}
     
 		//Speed of moving waves
@@ -95,65 +123,104 @@ function Waves(){
 		endShape(CLOSE);
 	}
 	
-	//setters
-	this.setRed = function(red){
+	setRed(red){
 		this.red = red;
 	}
 	
-	this.setGreen = function(green){
+	setGreen(green){
 		this.green = green;
 	}
 	
-	this.setBlue = function(blue){
+	setBlue(blue){
 		this.blue = blue;
 	}
 	
-	this.setAlpha = function(alpha){
+	setAlpha(alpha){
 		this.alpha = alpha;
 	}
 	
-	this.setYSpeed = function(ySpeed){
+	setYSpeed(ySpeed){
 		this.ySpeed = ySpeed;
 	}
 	
-	this.setXSpeed = function(xSpeed){
+	setXSpeed(xSpeed){
 		this.xSpeed = xSpeed;
 	}
 	
-	this.setSampleRate = function(sampleRate) {
+	setSampleRate(sampleRate) {
 		this.sampleRate = sampleRate;
 	}
 	
 	//getters
-	this.getRed = function() {
+	getRed() {
 		return red;
 	}
 	
-	this.getGreen = function(){
+	getGreen(){
 		return green;
 	}
 	
-	this.getBlue = function(){
+	getBlue(){
 		return blue;
 	}
 	
-	this.getAlpha = function(){
+	getAlpha(){
 		return alpha;
 	}
 	
-	this.getYSpeed = function(){
+	getYSpeed(){
 		return ySpeed;
 	}
 	
-	this.getXSpeed = function(){
+	getXSpeed(){
 		return xSpeed;
 	}
 	
-	this.getSampleRate = function() {
+	getSampleRate() {
 		return sampleRate;
 	}
-
+	
+	//other methods
+	setRGB(H,S,L){
+		var C = (1-abs(2*L - 1))*S;
+		var X = C*(1 - abs(((H/60) % 2) - 1));
+		var m = L - C/2;
+		var R;
+		var G;
+		var B;
+		if (H <= 60){
+			R = C;
+			G = X;
+			B = 0;
+		} else if (H <= 120){
+			R = X;
+			G = C;
+			B = 0;
+		} else if (H <= 180){
+			R = 0;
+			G = C;
+			B = X;
+		} else if (H <= 240){
+			R = 0;
+			G = X;
+			B = C;
+		} else if (H <= 300) {
+			R = X;
+			G = 0;
+			B = C;
+		} else {
+			R = C;
+			G = 0;
+			B = X;
+		}
+		this.red = (R+m)*255;
+		this.green = (G+m)*255;
+		this.blue = (B+m)*255;
+	}
+	
+	
 }
+
 
 function clearCanvas(){
 	background(0);
