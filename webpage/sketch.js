@@ -7,7 +7,6 @@ function setup() {
 	createCanvas(1280,720);
 	clearCanvas();
 	waves = new Waves();
-	createP('')
 	setupDOM();
 }
 
@@ -21,9 +20,32 @@ function setupDOM() {
 	funcLabel = createDiv("Functions:");
 	funcLabel.position(758,736)
 	
-	var clear = createButton("clear");
-	clear.position(1200,680);
+	var clear = createButton("Clear");
+	clear.position(758,768);
 	clear.mousePressed(clearCanvas);
+	
+	var pause = createButton("Pause");
+	pause.position(758,800);
+	pause.mousePressed(function() {
+		if (waves.isPaused()){
+			waves.Unpause();
+		} else {
+			waves.Pause();
+		}
+	});
+	
+	var start = createButton("Start");
+	start.position(758,832);
+	start.mousePressed(function() {
+		clearCanvas();
+		waves.Unpause();
+	});
+	
+	var sMouse = createButton("Sticky Mouse");
+	sMouse.position(758,864);
+	sMouse.mousePressed(function() {
+		waves.StickyMouse();
+	});
 	
 	hueLabel = createDiv("Hue");
 	hueLabel.position(10,768);
@@ -84,7 +106,10 @@ function setupDOM() {
 
 function draw() {
 	// background(0, 1);
-	waves.draw();
+	if (!waves.isPaused()){
+		waves.Draw();	
+	}
+	
 }
 
 class Waves {
@@ -98,9 +123,12 @@ class Waves {
 		this.ySpeed = 0.008; //0.008
 		this.xSpeed = 0.05; //0.05
 		this.sampleRate = 10; //10
+		this.paused = false; //false
+		this.stickyMouse = false; //false
 	}
 	
-	draw() {
+	Draw() {
+		
 		stroke(this.red,this.green,this.blue,this.alpha);
 		noFill();
 
@@ -110,10 +138,18 @@ class Waves {
     
 		for (var x = 0; x <= width; x += this.sampleRate) {
 		// Map noise value (between 0 and 1) to y-value of canvas
-			var y = map(noise(xoff, this.yoff), 0, 1, 100, 500);
-			// Set the vertex
-			curveVertex(x, y); 
-			xoff += this.xSpeed;
+			var y;
+			if (this.stickyMouse) {
+				var y = map(noise(xoff, this.yoff), 0, 1, mouseY-200, 200+ mouseY);
+				// Set the vertex
+				curveVertex(x, y); 
+				xoff += map(mouseX, 0,1280,0,0.1)
+			} else {
+				var y = map(noise(xoff, this.yoff), 0, 1, 100, 500);
+				// Set the vertex
+				curveVertex(x, y); 
+				xoff += this.xSpeed;
+			}
 		}
     
 		//Speed of moving waves
@@ -153,31 +189,35 @@ class Waves {
 	
 	//getters
 	getRed() {
-		return red;
+		return this.red;
 	}
 	
 	getGreen(){
-		return green;
+		return this.green;
 	}
 	
 	getBlue(){
-		return blue;
+		return this.blue;
 	}
 	
 	getAlpha(){
-		return alpha;
+		return this.alpha;
 	}
 	
 	getYSpeed(){
-		return ySpeed;
+		return this.ySpeed;
 	}
 	
 	getXSpeed(){
-		return xSpeed;
+		return this.xSpeed;
 	}
 	
 	getSampleRate() {
-		return sampleRate;
+		return this.sampleRate;
+	}
+	
+	isPaused() {
+		return this.paused;
 	}
 	
 	//other methods
@@ -218,7 +258,18 @@ class Waves {
 		this.blue = (B+m)*255;
 	}
 	
+	Pause(){
+		this.paused = true;
+	}
 	
+	Unpause(){
+		this.paused = false;
+	}
+	
+	StickyMouse(){
+		this.stickyMouse = !this.stickyMouse;
+		
+	}
 }
 
 
