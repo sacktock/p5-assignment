@@ -91,6 +91,29 @@ input[type=range]:focus::-ms-fill-upper {
   background: #5697cf;
 }
 
+.slider_container{
+	padding: 8px;
+}
+
+.bottom {
+	padding: 8px;
+	padding-bottom: 16px;
+}
+
+.label {
+	padding-left: 8px;
+	padding-bottom:8px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.para {
+	padding-left: 8px;
+	padding-bottom: 0px;
+	padding-top:16px;
+	font-style: italic;
+}
+
 button {
   background-color: #cccccc;
   border: none;
