@@ -18,6 +18,12 @@ crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function(){
+		var resetButton = document.getElementById("reset");
+		resetButton.addEventListener("click", function(){
+			w = new Waves();
+			resetDOM();
+		});
+		
 		var clear = document.getElementById("clear");
 		clear.addEventListener("click", function() {
 			w.clearCanvas();
@@ -27,10 +33,10 @@ crossorigin="anonymous">
 		pause.addEventListener("click", function() {
 			if (w.isPaused()){
 				w.Unpause();
-				pause.value="Pause";
+				pause.innerText="Pause";
 			} else {
 				w.Pause();
-				pause.value="Unpause";
+				pause.innerText="Unpause";
 			}
 		});
 		
@@ -38,22 +44,40 @@ crossorigin="anonymous">
 		start.addEventListener("click", function() {
 			w.clearCanvas();
 			w.Unpause();
+			pause.innerText="Pause";
 		});
 		
 		var invert = document.getElementById("invert");
 		invert.addEventListener("click", function() {
-			
 			w.InvertColour();
+			setColSliders();
 		});
 		
 		var s_mouse = document.getElementById("sticky_mouse");
 		s_mouse.addEventListener("click", function() {
 			w.StickyMouse();
+			if (w.isStickyMouse()){
+				s_mouse.innerText="Sticky Mouse Off";
+			} else {
+				s_mouse.innerText="Sticky Mouse";
+			}
 		});
 		
 		var random = document.getElementById("random");
 		random.addEventListener("click", function() {
 			w.Random();
+			setColSliders();
+		});
+		
+		var fill = document.getElementById("fill");
+		fill.addEventListener("click", function() {
+			if(w.isFill()){
+				w.setFill(false);
+				fill.innerText="Fill";
+			} else {
+				w.setFill(true);
+				fill.innerText="No Fill";
+			}
 		});
 		
 		var hueSlider = document.getElementById("hueSlider");
@@ -70,12 +94,12 @@ crossorigin="anonymous">
 		litSlider.addEventListener("input", function() {
 			w.setRGB(hueSlider.value,map(satSlider.value,0,100,0,1),map(litSlider.value,0,100,0,1));
 		});
-	
+
 		var aSlider = document.getElementById("aSlider");
 		aSlider.addEventListener("input", function() {
 			w.setAlpha(aSlider.value);
 		});
-	
+
 		var ySpeedSlider = document.getElementById("ySpeedSlider");
 		ySpeedSlider.addEventListener("input", function() {
 			w.setYSpeed(map(ySpeedSlider.value,0,100,0.0,0.016));
@@ -88,7 +112,12 @@ crossorigin="anonymous">
 		
 		var sampleRateSlider = document.getElementById("sampleRateSlider");
 		sampleRateSlider.addEventListener("input", function() {
-			w.setSampleRate(sampleRateSlider.value);
+			w.setSampleRate(map(sampleRateSlider.value,0,100,15,5));
+		});
+		
+		var ampSlider = document.getElementById("ampSlider");
+		ampSlider.addEventListener("input", function() {
+			w.setAmplitude(ampSlider.value);
 		});
 	});
 	</script>
@@ -96,13 +125,16 @@ crossorigin="anonymous">
 	
   </head>
   <body>
+  <!--set up of the DOM-->
   <div class="label">Functions:</div>
+  <button id="reset">Reset</button>
   <button id="clear">Clear</button>
   <button id="pause">Pause</button>
   <button id="start">Start</button>
   <button id="invert">Invert</button>
   <button id="sticky_mouse">Sticky Mouse</button>
   <button id="random">Random</button>
+  <button id="fill">Fill</button>
   <p class="para">Press 'Space Bar' to pause/unpause the animation</p>
   <div class="label">Sliders:</div>
   <div class="slider_container" id="hueLabel">Hue
@@ -117,7 +149,9 @@ crossorigin="anonymous">
   <input type="range" min="0" max="100" value="50" id="ySpeedSlider"></div>
   <div class="slider_container" id="xSLabel">Waviness
   <input type="range" min="0" max="100" value="50" id="xSpeedSlider"></div>
-  <div class="bottom" id="sRLabel">Waviness 2
-  <input type="range" min="1" max="100" value="10" id="sampleRateSlider"></div>
+  <div class="slider_container" id="sRLabel">Waviness 2
+  <input type="range" min="1" max="100" value="50" id="sampleRateSlider"></div>
+  <div class="bottom" id="ampLabel">Amplitude
+  <input type="range" min="50" max="680" value="400" id="ampSlider"></div>
   </body>
 </html>

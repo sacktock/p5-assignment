@@ -1,10 +1,12 @@
 class Waves {
-	constructor(r,g,b,a,ySpeed,xSpeed,sampleRate,paused,stickyMouse) {
+	constructor(r,g,b,a,ySpeed,xSpeed,sampleRate,amplitude) {
 		//default values
 		this.yoff = 0.0; //0.0
-		this.xoff =0;
-		this.bgColor = 0;
-		this.cube;
+		this.xoff =0; //0
+		this.bgColor = 0; //0 (black)
+		this.paused = false; //false
+		this.stickyMouse = false;//false
+		this.fill = false;//false
 		//other fields
 		this.r = r || 255; //255
 		this.g = g ||255; //255
@@ -13,8 +15,7 @@ class Waves {
 		this.ySpeed = ySpeed || 0.008; //0.008
 		this.xSpeed = xSpeed || 0.05; //0.05
 		this.sampleRate = sampleRate || 10; //10
-		this.paused = paused || false; //false
-		this.stickyMouse = stickyMouse || false; //false
+		this.amplitude = amplitude || 400;
 		
 		createCanvas(1280,720);
 		
@@ -22,10 +23,12 @@ class Waves {
 	}
 	
 	draw() {
-		
 		stroke(this.r,this.g,this.b,this.alpha);
-		noFill();
-
+		if (!this.fill){
+			noFill();
+		} else {
+			fill(this.r,this.g,this.b);
+		}
 		beginShape();
 		this.xoff = 0;
     
@@ -44,12 +47,12 @@ class Waves {
 	mapPoint(x){
 		var y= 0;
 		if (this.stickyMouse && mouseX < 1280 && mouseY < 720) {
-				y = map(noise(this.xoff, this.yoff), 0, 1, mouseY-200, 200+ mouseY);
+				y = map(noise(this.xoff, this.yoff), 0, 1, mouseY-(this.amplitude/2), (this.amplitude/2)+ mouseY);
 				// Set the vertex
 				curveVertex(x, y); 
 				this.xoff += map(mouseX, 1280,0,0,0.1)
 			} else {
-				y = map(noise(this.xoff, this.yoff), 0, 1, 160, 560);
+				y = map(noise(this.xoff, this.yoff), 0, 1, 360-(this.amplitude/2), 360+(this.amplitude/2));
 				// Set the vertex
 				curveVertex(x, y); 
 				this.xoff += this.xSpeed;
@@ -85,6 +88,14 @@ class Waves {
 		this.sampleRate = sampleRate;
 	}
 	
+	setAmplitude(amplitude){
+		this.amplitude = amplitude;
+	}
+	
+	setFill(fill){
+		this.fill = fill;
+	}
+	
 	//getters
 	getRed() {
 		return this.r;
@@ -114,12 +125,20 @@ class Waves {
 		return this.sampleRate;
 	}
 	
+	getAmplitude(){
+		return this.amplitude;
+	}
+	
 	isPaused() {
 		return this.paused;
 	}
 	
 	isStickyMouse() {
 		return this.stickyMouse;
+	}
+	
+	isFill(){
+		return this.fill;
 	}
 	
 	//other methods

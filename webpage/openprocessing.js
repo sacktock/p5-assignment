@@ -1,13 +1,12 @@
 var yoff = 0.0
 
 function setup() {
-  createCanvas(1280,720);
+  createCanvas(800,500);
   background(0);
 }
 
 function draw() {
-	// background(0, 1);
-  stroke(255,20);
+  stroke(255, 20);
   noFill();
 
   beginShape();
@@ -18,14 +17,14 @@ function draw() {
   // Map noise value (between 0 and 1) to y-value of canvas
     var y = map(noise(xoff, yoff), 0, 1, 100, 500);
     // Set the vertex
-    curveVertex(x, y); 
+    vertex(x, y); 
     xoff += 0.05;
   }
     
   //Speed of moving waves
   yoff += 0.008;
-  curveVertex(width, height);
-  curveVertex(0, height);
+  vertex(width, height);
+  vertex(0, height);
   endShape(CLOSE);
 
 }
