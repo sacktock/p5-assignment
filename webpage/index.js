@@ -12,6 +12,7 @@ function draw() {
 function keyPressed() {
 	var pause = document.getElementById("pause");
 	if (key == " ") {
+		//If spacebar is pressed pause or unpause the animation
 		if (w.isPaused()){
 			w.Unpause();
 			pause.innerText="Pause";
@@ -23,6 +24,7 @@ function keyPressed() {
 }
 
 function setColSliders(){
+	//sets colour sliders to the correct values by converting the RGB components of the wave colour to HSL components of colour.
 	var R = w.getRed()/255;
 	var G = w.getGreen()/255;
 	var B = w.getBlue()/255;
@@ -60,6 +62,7 @@ function setColSliders(){
 }
 
 function resetDOM(){
+	//resets DOM components to their default values/state
 	var hueSlider = document.getElementById("hueSlider");
 	var satSlider = document.getElementById("satSlider");
 	var litSlider = document.getElementById("litSlider");

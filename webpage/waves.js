@@ -7,7 +7,7 @@ class Waves {
 		this.paused = false; //false
 		this.stickyMouse = false;//false
 		this.fill = false;//false
-		//other fields
+		//other properties
 		this.r = r || 255; //255
 		this.g = g ||255; //255
 		this.b = b ||255; //255
@@ -15,7 +15,7 @@ class Waves {
 		this.ySpeed = ySpeed || 0.008; //0.008
 		this.xSpeed = xSpeed || 0.05; //0.05
 		this.sampleRate = sampleRate || 10; //10
-		this.amplitude = amplitude || 400;
+		this.amplitude = amplitude || 400; //400
 		
 		createCanvas(1280,720);
 		
@@ -149,6 +149,7 @@ class Waves {
 	}
 
 	setRGB(H,S,L){
+		//sets the RGB components of the colour of the wave based on given HSL components of colour
 		var C = (1-abs(2*L - 1))*S;
 		var X = C*(1 - abs(((H/60) % 2) - 1));
 		var m = L - C/2;
@@ -194,14 +195,17 @@ class Waves {
 	}
 	
 	StickyMouse(){
+		//toggles stickMouse on/off
 		this.stickyMouse = !this.stickyMouse;
 	}
 	
 	InvertColour(){
+		//inverts the RGB colour components of the wave
 		this.r = 255 - this.r;
 		this.b = 255 - this.b;
 		this.g = 255 - this.g;
 		
+		//sets the background colour of the canvas to white if black or black if white
 		if (this.bgColor == 0){
 				background(16777215);
 				this.bgColor = 16777215;
@@ -212,6 +216,7 @@ class Waves {
 	}
 	
 	Random(){
+		//generates a random RGB colour
 		var h=random()*360;
 		var s=random();
 		var l=random();

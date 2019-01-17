@@ -54,7 +54,8 @@ Methods
 	- sampleRate
 	- amplitude
 - **draw** -> generates a wave form and draws it to the canvas.
-- **mapPoint** -> params -> generates points for the wave to curve around.
+- **mapPoint** -> generates a y value for a given x value and maps it as a point for the waves to curve around.
+	- -> params 
 	- x
 - **setters**
 	- setRed -> params -> r
