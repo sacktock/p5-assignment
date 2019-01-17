@@ -4,15 +4,17 @@ COMP1101 Programming Summative Assessment 1
 Index.html (example page)
 -------------------------
 
-The head _<head>_ attaches and runs all the scripts to the webpage. The ```_<script type="text/javascript">_``` executes some javascript once the DOM has loaded, which adds _EventListeners_ and attaches functions to all the DOM elements. The ```_<body>_``` defines all the DOM elements using html tags, giving them unique Ids and enclosing some of them in ```_<div>_```s for stylistic effect. Labels and text are also added for stylistic purposes.
+The head _<head>_ attaches and runs all the scripts to the webpage. The ```<script type="text/javascript">``` executes some javascript once the DOM has loaded, which adds _EventListeners_ and attaches functions to all the DOM elements. The ```<body>``` defines all the DOM elements using html tags, giving them unique ids and enclosing some of them in ```<div>```s for stylistic effect. Labels and text are also added for stylistic purposes.
 
 Index.js
 --------
 
 Variables
+
 - **w** -> _w_ is an instance of the _Waves_ class.
 
 Functions
+
 - **setup** -> _w_ is set to an instance of the _Waves_ class.
 - **draw** -> calls _w.draw()_, which draws the waves to the canvas if _w_ is not paused.
 - **keyPressed** -> if space bar is pressed then _w_ is paused or unpaused based on the state of _w_.
@@ -34,14 +36,15 @@ Properties
 - **g** -> stores the green component of the colour of the waves.
 - **b** -> stores the blue component of the colour of the waves.
 - **alpha** -> stores the opacity of the waves (0%-100%).
-- **ySpeed** -> stores the speed at which the waves appear to move, or the rate at which yoff is incremented when the waves are generated.
-- **xSpeed** -> stores what appears to be a measure of waviness of the waves, or the rate at which xoff is incremented when the waves are generated.
+- **ySpeed** -> stores the speed at which the waves appear to move, or the rate at which _yoff_ is incremented when the waves are generated.
+- **xSpeed** -> stores what appears to be a measure of waviness of the waves, or the rate at which _xoff_ is incremented when the waves are generated.
 - **sampleRate** -> stores what appears to be a measure of waviness of the waves, or the rate at which points are generated for the wave to curve around.
-- **amplitude** -> stores the range that y values can deviate from the centre of the canvas.
+- **amplitude** -> stores the range that y values can deviate.
 
 Methods
-- **constructor** -> instantiates the class 
--> params
+
+- **constructor** -> instantiates the class. 
+	- -> params
 	- r
 	- g
 	- b
@@ -50,8 +53,8 @@ Methods
 	- xSpeed
 	- sampleRate
 	- amplitude
-- **draw** -> generates a wave form and draws it to the canvas
-- **mapPoint** -> params -> generates points for the wave to curve around
+- **draw** -> generates a wave form and draws it to the canvas.
+- **mapPoint** -> params -> generates points for the wave to curve around.
 	- x
 - **setters**
 	- setRed -> params -> r
@@ -76,13 +79,13 @@ Methods
 	- isStickyMouse
 	- isFill
 - **setRGB** -> sets the red, green and blue colour components of the wave based on hue, saturation and lightness values.
--> params
+	- -> params
 	- H
 	- S
 	- L
-- **Pause** -> sets _this.pause_ to true.
-- **Unpause** -> sets _this.pause_ to false.
-- **StickyMouse** -> toggles _this.stickyMouse_ between true and false.
+- **Pause** -> sets _paused_ to true.
+- **Unpause** -> sets _paused_ to false.
+- **StickyMouse** -> toggles _stickyMouse_ between true and false.
 - **InvertColour** -> inverts the colour of the waves.
 - **Random** -> generates a random colour for the waves.
 
