@@ -1,10 +1,34 @@
 COMP1101 Programming Summative Assessment 1
 ===========================================
+
+p5.js project by clvp22, Durham University.
 	
 Index.html (example page)
 -------------------------
 
-The head _<head>_ attaches and runs all the scripts to the webpage. The ```<script type="text/javascript">``` executes some javascript once the DOM has loaded, which adds _EventListeners_ and attaches functions to all the DOM elements. The ```<body>``` defines all the DOM elements using html tags, giving them unique ids and enclosing some of them in ```<div>```s for stylistic effect. Labels and text are also added for stylistic purposes.
+The head _<head>_ attaches and runs all the scripts to the webpage. The ```<script type="text/javascript">``` executes some javascript once the DOM has loaded, which adds _EventListeners_ and attaches functions to all the DOM elements. The ```<body>``` defines all the DOM elements using html tags, giving them unique ids and enclosing some of them in ```<div>```s for stylistic effect. Labels and text are also added for stylistic purposes. This page consists of 8 buttons and 8 sliders.
+
+Buttons
+
+- **Reset** -> resets the sketch to its original state along with all the buttons and sliders.
+- **Clear** -> clears the canvas by setting all the pixels to the background colour of the canvas.
+- **Pause** -> pauses or unpauses the animation.
+- **Start** -> clears the canvas and unpauses the animation.
+- **Invert** -> inverts the colours displayed on the canvas.
+- **Sticky Mouse** -> toggles sticky mouse on or off, so that the waves follow the mouse position.
+- **Random** -> gives the waves a random colour.
+- **Fill** -> gives the waves fill.
+
+Sliders
+
+- **Hue** -> changes the hue component of colour of the waves.
+- **Saturation** -> changes the saturation component of colour of the waves.
+- **Lightness** -> changes the lightness component of colour of the waves.
+- **Opacity** -> changes the opacity of the waves.
+- **Wave Speed** -> changes the speed at which the waves move.
+- **Waviness** -> changes the waviness of the waves.
+- **Waviness 2** -> changes the waviness of the waves.
+- **Amplitude** -> changes the range of y values the wave can have.
 
 Index.js
 --------
