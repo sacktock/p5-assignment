@@ -23,25 +23,27 @@ class Waves {
 	}
 	
 	draw() {
-		stroke(this.r,this.g,this.b,this.alpha);
-		if (!this.fill){
-			noFill();
-		} else {
-			fill(this.r,this.g,this.b);
+		if (!this.paused){
+			stroke(this.r,this.g,this.b,this.alpha);
+			if (!this.fill){
+				noFill();
+			} else {
+				fill(this.r,this.g,this.b);
+			}
+			beginShape();
+			this.xoff = 0;
+		
+			for (var x = 0; x <= width; x += this.sampleRate) {
+			// Map noise value (between 0 and 1) to y-value of canvas
+				var y = this.mapPoint(x);
+			}
+		
+			//Speed of moving waves
+			this.yoff += this.ySpeed;
+			curveVertex(width, height);
+			curveVertex(0, height);
+			endShape(CLOSE);
 		}
-		beginShape();
-		this.xoff = 0;
-    
-		for (var x = 0; x <= width; x += this.sampleRate) {
-		// Map noise value (between 0 and 1) to y-value of canvas
-			var y = this.mapPoint(x);
-		}
-    
-		//Speed of moving waves
-		this.yoff += this.ySpeed;
-		curveVertex(width, height);
-		curveVertex(0, height);
-		endShape(CLOSE);
 	}
 	
 	mapPoint(x){

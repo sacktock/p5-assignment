@@ -6,9 +6,7 @@ function setup() {
 }
 
 function draw() {
-	if (!w.isPaused()){
-		w.draw();	
-	}
+	w.draw();	
 }
 
 function keyPressed() {
